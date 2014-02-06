@@ -33,7 +33,7 @@ apache::vhost { 'pad.pureinsomnia.com':
 apache::vhost { '*.pureinsomnia.com':
     vhost_name => '*',
     port       => '80',
-    virtual_docroot' => '/var/www/%-2+',
+    virtual_docroot => '/var/www/%-2+',
     docroot          => '/var/www',
     serveraliases    => ['*.pureinsomnia.com',],
 	directories => [{ path => '/var/www/phpmyadmin.pureinsomnia.com','provider'=>'files','deny'=>'from all','allow'=>'from localhost','order'=>'deny,allow'}],
