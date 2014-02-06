@@ -1,0 +1,49 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          teamspeak
+# Required-Start:    networking
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      S 0 1 6
+# Short-Description: TeamSpeak Server Daemon
+# Description:       Starts/Stops/Restarts the TeamSpeak Server Daemon
+### END INIT INFO
+
+USER=<%= @ =>
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+DIR=<%= @ =>
+DAEMON=$DIR/ts3server_minimal_runscript.sh
+
+PARAMS="inifile=ts3server.ini"
+
+NAME=teamspeak3-server
+DESC="Teamspeak Server 3"
+case "$1" in
+start)
+echo "Starting $DESC"
+su $USER -l -c "screen -m -d -S $NAME $DAEMON $PARAMS"
+;;
+stop)
+su $USER -l -c "screen -S $NAME  -X quit "
+    echo " ... done. $DESC Stopped."
+;;
+restart)
+su $USER -l -c "screen -S $NAME  -X quit "
+    echo " Closed Process, Restarting"
+su $USER -l -c "screen -m -d -S $NAME $DAEMON $PARAMS"
+echo " ... done. $DESC Restarted"
+;;
+status)
+# Check whether there's a "Team Speak 3" process
+ps aux | grep -v grep | grep ts3server_ > /dev/null
+CHECK=$?
+[ $CHECK -eq 0 ] && echo "$DESC is UP" || echo "$DESC is DOWN"
+;;
+*)
+echo "Usage: $0 {start|stop|status|restart}"
+exit 1
+;;
+esac
+exit 0

@@ -1,0 +1,5 @@
+name 'paul91-ts3server'
+version '0.0.1'
+dependency 'puppetlabs/stdlib'
+summary ""
+description ""

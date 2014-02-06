@@ -1,0 +1,5 @@
+fixtures:
+  repositories:
+    "staging": "https://github.com/nanliu/puppet-staging.git"
+  symlinks:
+    "ts3server": "#{source_dir}"
