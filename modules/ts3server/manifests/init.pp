@@ -16,6 +16,7 @@ class ts3server (
   $architecture          = $ts3server::params::architecture,
   $clear_database        = $ts3server::params::clear_database,
   $dbplugin              = $ts3server::params::dbplugin,
+  $dbsqlcreatepath       = $ts3server::params::dbsqlcreatepath,
   $default_virtualserver = $ts3server::params::default_virtualserver,
   $filetransfer_ip       = $ts3server::params::filetransfer_ip,
   $filetransfer_port     = $ts3server::params::filetransfer_port,
@@ -33,6 +34,7 @@ class ts3server (
   $voice_ip              = $ts3server::params::voice_ip,
   $ts3server_package     = $ts3server::params::ts3server_package,
   $ts3server_package_url = $ts3server::params::ts3server_package_url,
+  $licensepath		 = $ts3server::params::licensepath,
 )  inherits ts3server::params {
 
   class { 'staging':
@@ -95,7 +97,7 @@ class ts3server (
     mode    => '0755',
     owner   => 'root',
     group   => 'root',
-    source  => template('ts3server/teamspeak.erb'),
+    content  => template('ts3server/teamspeak.erb'),
   }
 
   service { 'teamspeak':

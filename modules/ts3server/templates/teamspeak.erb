@@ -9,11 +9,11 @@
 # Description:       Starts/Stops/Restarts the TeamSpeak Server Daemon
 ### END INIT INFO
 
-USER=<%= @ =>
+USER=<%= @user %>
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
 
-DIR=<%= @ =>
+DIR=<%= @server_root %>
 DAEMON=$DIR/ts3server_minimal_runscript.sh
 
 PARAMS="inifile=ts3server.ini"
