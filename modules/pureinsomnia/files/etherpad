@@ -1,0 +1,17 @@
+#! /bin/bash
+SCRIPT_NAME=`basename "$0"`
+USER=etherpad
+
+U=`id -nu`
+cmd=/web_hosts/pad.pureinsomnia.com/sources/etherpad/bin/run.sh
+if [ ! $U == $USER ]; then
+        if [ $U == "root" ]; then
+                # use "-l (login)" to delete the environment variables of the calling shell.
+                #exec su -l $USER -c "$0 $@"
+                cmd="su -l $USER -c $cmd"
+        else
+        echo "Script must be run from $SYSTEM or root. You are '$U'"
+        rc_exit 1
+        fi
+fi
+$cmd &
