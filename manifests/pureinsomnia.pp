@@ -39,56 +39,18 @@ apache::module { 'proxy':}
 apache::module { 'vhost_alias':}
 
 file {'pureinsomnia.com':
-  path		=> '/etc/apache2/sites-available/pureinsomnia.com',
+  path		=> '/etc/apache2/sites-available/pureinsomnia.com.conf',
   ensure	=> file,
-  source	=> 'pureinsomnia/files/pureinsomnia.com.conf'),
+  source	=> 'puppet:///modules/pureinsomnia/pureinsomnia.com.conf',
   owner		=> root,
   mode		=> 0644,
 }
 file {'pureinsomnia.com-link':
-  path		=> '/etc/apache2/sites-available/pureinsomnia.com',
+  path		=> '/etc/apache2/sites-enabled/00-pureinsomnia.com.conf',
   ensure	=> link,
-  target	=> '../sites-enabled/00-pureinsomnia.com',
+  target	=> '../sites-available/pureinsomnia.com.conf',
 }
 
-/*
-apache::vhost { 'pad.pureinsomnia.com':
-    vhost_name => 'pad.pureinsomnia.com',
-    port       => '80',
-    docroot          => '/var/www/pad.pureinsomnia.com',
-	proxy_pass => [
-		{'path' => '/', 'url' => 'http://localhost:9001/' }
-	],
-}
-apache::vhost { '*.pureinsomnia.com':
-    vhost_name => '*',
-    port       => '80',
-    virtual_docroot => '/var/www/%-2+',
-    docroot          => '/var/www',
-    serveraliases    => ['*.pureinsomnia.com',],
-	directories => [{ path => '/var/www/phpmyadmin.pureinsomnia.com','provider'=>'files','deny'=>'from all','allow'=>'from localhost','order'=>'deny,allow'}],
-}
-apache::vhost { '*.digiwireit.com':
-    vhost_name => '*',
-    port       => '80',
-    virtual_docroot => '/var/www/%-2+',
-    docroot          => '/var/www',
-    serveraliases    => ['*.digiwireit.com',],
-}
-apache::vhost { '*.coloradorollerderby.org':
-    vhost_name => '*',
-    port       => '80',
-    virtual_docroot => '/var/www/%-2+',
-    docroot          => '/var/www',
-    serveraliases    => ['*.coloradorollerderby.org',],
-}
-apache::vhost { 'phpmyadmin.pureinsomnia.com':
-    docroot     => '/var/www/phpmyadmin',
-    directories => [
-		{ path => '~ (\.swp|\.bak|~)$', 'provider' => 'files', 'deny' => 'from all' },
-    ],
-}
-*/
 class { 'ts3server':
 	dbsqlcreatepath => 'create_sqlite',
 	version => '3.0.10.3',
