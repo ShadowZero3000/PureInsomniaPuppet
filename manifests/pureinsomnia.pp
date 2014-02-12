@@ -35,12 +35,22 @@ ufw::allow { "teamspeak-udp":
 
 class { 'apache':
 }
-apache::vhost { 'pureinsomnia.com':
-	docroot 	=> '/var/www/pureinsomnia.com',
-	server_name	=> 'pureinsomnia.com',
-	priority	=> '',
-	template	=> 'apache/virtualhost/vhost.conf.erb',
+apache::module { 'proxy':}
+apache::module { 'vhost_alias':}
+
+file {'pureinsomnia.com':
+  path		=> '/etc/apache2/sites-available/pureinsomnia.com',
+  ensure	=> file,
+  source	=> 'pureinsomnia/files/pureinsomnia.com.conf'),
+  owner		=> root,
+  mode		=> 0644,
 }
+file {'pureinsomnia.com-link':
+  path		=> '/etc/apache2/sites-available/pureinsomnia.com',
+  ensure	=> link,
+  target	=> '../sites-enabled/00-pureinsomnia.com',
+}
+
 /*
 apache::vhost { 'pad.pureinsomnia.com':
     vhost_name => 'pad.pureinsomnia.com',
