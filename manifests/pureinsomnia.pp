@@ -54,9 +54,44 @@ file {'pureinsomnia.com-link':
 class { 'ts3server':
 	dbsqlcreatepath => 'create_sqlite',
 	version => '3.0.10.3',
-	licensepath => '/opt/static/teamspeak/licensekey.dat',
+	licensepath => '/opt/static/teamspeak/',
 }
 
+user { 'etherpad':
+	name	=> etherpad,
+	ensure	=> present,
+}
+
+file {'etherpadInit':
+  path		=> '/etc/init.d/etherpad',
+  ensure	=> file,
+  source	=> 'puppet:///modules/pureinsomnia/etherpad',
+  owner		=> root,
+  mode		=> 0744,
+}
+
+service { 'etherpad':
+	name	=> etherpad,
+	ensure	=> running,
+	enable	=> true,
+	path	=> '/etc/init.d/',
+}
+
+
+file {'svnserveInit':
+  path		=> '/etc/init.d/svnserve',
+  ensure	=> file,
+  source	=> 'puppet:///modules/pureinsomnia/svnserve',
+  owner		=> root,
+  mode		=> 0744,
+}
+
+service { 'svnserve':
+	name	=> svnserve,
+	ensure	=> running,
+	enable	=> true,
+	path	=> '/etc/init.d/',
+}
 
 #file { '/home/theinsomniac/.ssh/licensekey.dat': 
 #	ensure => link,
