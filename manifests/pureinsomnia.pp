@@ -110,7 +110,7 @@ ssh_authorized_key { 'Muse':
 
 ssh_authorized_key { 'Emancipation':
 	ensure	=> present,
-	key	=> "AAAAB3NzaC1yc2EAAAABJQAAAIB8kuyAHljH1oO9gVXqKKFcj2Etelx0S3B7LRxpH2T9wIBeqynXBeWKoGAHuKCLYoBLEpvgp/cmm3YeZsOiWxMlkovy0Jpx24wdLNdKVs9cv/ANhx6WQBrLGksOcN8S++zVx3xmmM5DEkolKlg6AFr20HeQSUfSO5yl4vFY8ggtiQ=",
+	key	=> "AAAAB3NzaC1yc2EAAAABJQAAAIB8kuyAHljH1oO9gVXqKKFcj2Etelx0S3B7LRxpH2T9wIBeqynXBeWKoGAHuKCLYoBLEpvgp/cmm3YeZsOiWxMlkovy0Jpx24wdLNdKVs9cv/ANhx6WQBrLGksOcN8S++zVx3xmmM5DEkolKlg6AFr20HeQSUfSO5yl4vFY8ggtiQ==",
 	user	=> theinsomniac,
 	type	=> ssh-rsa,
 }
