@@ -7,6 +7,7 @@ file {'/etc/php5/apache2/php.ini':
   ensure => file,
 }
 
+
 package {'mysql-server':
   ensure => 'present',
 }
@@ -16,6 +17,7 @@ service {'mysql':
   enable => true,
   require => Package['mysql-server'],
 }
+
 include ufw
 ufw::allow { "allow-global-tcp":
 	port => "22,80,443",
@@ -118,6 +120,30 @@ ssh_authorized_key { 'Redemption':
 	user	=> theinsomniac,
 	type	=> ssh-rsa,
 }
+
+class defaults {
+	class { 'duplicity::params':
+		bucket	=> 'raven_backup',
+		dest_id	=> 'AKIAIIMKW67AJOB5BO5Q',
+		dest_key => 'NjpH89rHZ3LZG1+SYjM2l+rwnW+BS9SmuBa1KCyT',
+		remove_older_than => '2M',
+		pubkey_id => '63452547',
+		folder	=> 'raven.pureinsomnia.com',
+	}
+}
+
+include defaults
+
+duplicity { 'opt_backup':
+	directory	=> '/opt/backup',
+	pre_command	=> '/opt/backup/establishLinks.sh',
+}
+duplicity { 'sql_backup':
+	pre_command	=> '/opt/sql_backup/prep.sh',
+	directory	=> '/opt/sql_backup',
+}
+
+
 #file { '/home/theinsomniac/.ssh/licensekey.dat': 
 #	ensure => link,
 #	target => '/opt/static/teamspeak/licensekey.dat'
