@@ -1,0 +1,51 @@
+{
+  "types": [
+    {
+      "doc": "Manage the contents of /etc/sshd/sshd_config",
+      "parameters": [
+        {
+          "doc": "Configuration key to set",
+          "name": "name"
+        }
+      ],
+      "name": "sshd_config",
+      "providers": [
+        {
+          "doc": "The sshd_config provider that uses the ParsedFile class  Required binaries: `sshd`.    ",
+          "name": "parsed"
+        }
+      ],
+      "properties": [
+        {
+          "doc": "The basic property that the resource should be in.  Valid values are `present`, `absent`.",
+          "name": "ensure"
+        },
+        {
+          "doc": "Value to set key to",
+          "name": "value"
+        }
+      ]
+    }
+  ],
+  "license": "UNKNOWN",
+  "checksums": {
+    "tests/020_purged.pp": "5d4e7ca6c169e8026b9ed12bbfbb42e4",
+    "lib/puppet/provider/sshd_config/parsed.rb": "28401eefacb581270b4279606ffaef98",
+    "manifests/config.pp": "3d7ef5d998c0712ddcb3ac85666a5821",
+    "manifests/setup.pp": "90133d7e0d002617f46da2aa7d47f18c",
+    "tests/010_basic.pp": "0c9857f858cb0888cc20f7a70aa08b37",
+    "lib/puppet/type/sshd_config.rb": "9372ec3b08afb1b9778d1c93a72b421f",
+    "Modulefile": "809757665799e10fcb796a2d3a35c8c4",
+    "manifests/init.pp": "9e42c4d86808ca7cb3e993c3c95c3a0d"
+  },
+  "project_page": "UNKNOWN",
+  "source": "UNKNOWN",
+  "description": "UNKNOWN",
+  "summary": "UNKNOWN",
+  "name": "bobsh-sshd",
+  "author": "bobsh",
+  "version": "1.0.0",
+  "dependencies": [
+
+  ]
+}
