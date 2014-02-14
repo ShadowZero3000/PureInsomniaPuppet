@@ -14,8 +14,8 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="svnserve"
 NAME=svnserve
 DAEMON=/usr/bin/$NAME
-DAEMON_ARGS="-d -r /opt/subversion/repos"
 PIDFILE=/var/run/$NAME.pid
+DAEMON_ARGS="-d -r /opt/subversion/repos --pid-file $PIDFILE"
 SCRIPTNAME=/etc/init.d/$NAME
 
 [ -x "$DAEMON" ] || exit 0
@@ -28,9 +28,9 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 do_start()
 {
-	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null \
+	start-stop-daemon --start --quiet -m --pidfile $PIDFILE --exec $DAEMON --test > /dev/null \
 		|| return 1
-	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- \
+	start-stop-daemon --start -m --pidfile $PIDFILE --exec $DAEMON -- \
 		$DAEMON_ARGS \
 		|| return 2
 }
@@ -44,6 +44,19 @@ do_stop()
 	[ "$?" = 2 ] && return 2
 	rm -f $PIDFILE
 	return "$RETVAL"
+}
+
+do_status()
+{
+	if [ -e "$PIDFILE" ]
+	then
+		ps -p `cat $PIDFILE` > /dev/null
+	        CHECK=$?
+	else
+		CHECK=1
+	fi
+	[ $CHECK -eq 0 ] && echo "$DESC is UP" || echo "$DESC is DOWN"
+	return "$CHECK"
 }
 
 case "$1" in
@@ -81,8 +94,16 @@ case "$1" in
 		;;
 	esac
 	;;
+  status)
+	do_status
+	case "$?" in
+		0) exit 0 ;;
+		*) exit 1 ;;
+	esac
+	;;
   *)
 	echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
+	echo "$VERBOSE"
 	exit 3
 	;;
 esac
