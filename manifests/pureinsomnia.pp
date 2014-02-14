@@ -93,7 +93,33 @@ service { 'svnserve':
 	path	=> '/etc/init.d/',
 }
 
+
+sshd::config{
+	"PermitRootLogin": value => "no";
+	"PasswordAuthentication": value => "no";
+}
+
+ssh_authorized_key { 'Muse':
+	ensure	=> present,
+	key	=> "AAAAB3NzaC1yc2EAAAABJQAAAIEAhRqqIip5pkJBAFEqPzJJePkUn5gU5wkowyY19FLHdbDiwu4KCJEjTPyyPIRl/NRa0vaYDrV3+8OkefXwzoKSt/GckdhvtVhm23EFGebWLEhseAqMKBPG+jJd0eq/u/Dy2lPqgXvWm/L2nwp3TRAnk5pBeA7uhffpVpIX/DHzf6c=",
+	user	=> theinsomniac,
+	type	=> ssh-rsa,
+}
+
+ssh_authorized_key { 'Emancipation':
+	ensure	=> present,
+	key	=> "AAAAB3NzaC1yc2EAAAABJQAAAIB8kuyAHljH1oO9gVXqKKFcj2Etelx0S3B7LRxpH2T9wIBeqynXBeWKoGAHuKCLYoBLEpvgp/cmm3YeZsOiWxMlkovy0Jpx24wdLNdKVs9cv/ANhx6WQBrLGksOcN8S++zVx3xmmM5DEkolKlg6AFr20HeQSUfSO5yl4vFY8ggtiQ=",
+	user	=> theinsomniac,
+	type	=> ssh-rsa,
+}
+ssh_authorized_key { 'Redemption':
+	ensure	=> present,
+	key	=> "AAAAB3NzaC1yc2EAAAABIwAAAQEAzv7RuFp1loiqkMjV6UkYVjXu6FQFHaXR8lMMksWBtIh7sNteFR47L5j3miTVuoJ4xSBx49dhrCEXpWB2bg0ZYT+bnYwkhpF2N+qJXkN8x4x4fhef0+z4jAjgKszRJBLwM259+yNk91jQKsUAiHr32gB4nH0YoYEDzgJQLQ3ttu8LGAR4pTyaayy3296JoEM5mY3MTKLsELnCccsEXzA8bmSARcQuIfrwGn3sGW4RfyW+GczmZ1d5TQzVHDiqbEWX62tzgBohS8ZVt8k7rUia66+NMLIgMMMfktRITLOJv1IMVM0yVRDMIlPYJZWOqoJjtwOtZJ1RiJZ2Vn6AdZDbBw=",
+	user	=> theinsomniac,
+	type	=> ssh-rsa,
+}
 #file { '/home/theinsomniac/.ssh/licensekey.dat': 
 #	ensure => link,
 #	target => '/opt/static/teamspeak/licensekey.dat'
 #}
+
