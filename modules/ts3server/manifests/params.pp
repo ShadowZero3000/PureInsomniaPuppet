@@ -143,37 +143,52 @@
 # Sample Usage:
 #
 
-class ts3server::params {
-  $port                  = '9987'
-  $keyfile               = undef
-  $create_default        = '1'
-  $user                  = 'teamspeak'
-  $group                 = 'teamspeak'
-  $version               = '3.0.7.2'
-  $voice_ip              = '0.0.0.0'
-  $machine_id            = undef
-  $filetransfer_port     = 30033
-  $filetransfer_ip       = '0.0.0.0'
-  $query_port            = '10011'
-  $query_ip              = '0.0.0.0'
-  $clear_database        = '0'
-  $logpath               = 'logs/'
-  $dbpluginparameter     = undef
-  $dbsqlpath             = 'sql/'
-  $dbsqlcreatepath       = 'create_mysql' # 'create_sqlite'
-  $licensepath           = undef
-  $query_ip_whitelist    = 'query_ip_whitelist.txt'
-  $query_ip_backlist     = 'query_ip_backlist.txt'
-  $dbclientkeepdays      = '90'
-  $dblogkeepdays         = '90'
-  $logquerycommands      = '1'
-  $no_permission_update  = '0'
-  $dbconnections         = '10'
-  $logappend             = '0'
-  $server_root           = "/opt/teamspeak3-server_linux-${::architecture}"
-  $ts3server_package     = "teamspeak3-server_linux-${architecture}-${version}.tar.gz"
-  $ts3server_package_url = "http://files.teamspeak-services.com/releases/${version}/${ts3server_package}"
-
+class ts3server::params (
+  $port                  = '9987',
+  $keyfile               = undef,
+  $create_default        = '1',
+  $user                  = 'teamspeak',
+  $group                 = 'teamspeak',
+  $version               = '3.0.10.3',
+  $voice_ip              = '0.0.0.0',
+  $machine_id            = undef,
+  $filetransfer_port     = 30033,
+  $filetransfer_ip       = '0.0.0.0',
+  $query_port            = '10011',
+  $query_ip              = '0.0.0.0',
+  $clear_database        = '0',
+  $logpath               = 'logs/',
+  $dbpluginparameter     = undef,
+  $dbsqlpath             = 'sql/',
+  $dbsqlcreatepath       = 'create_mysql', # 'create_sqlite'
+  $licensepath           = undef,
+  $query_ip_whitelist    = 'query_ip_whitelist.txt',
+  $query_ip_backlist     = 'query_ip_backlist.txt',
+  $dbclientkeepdays      = '90',
+  $dblogkeepdays         = '90',
+  $logquerycommands      = '1',
+  $no_permission_update  = '0',
+  $dbconnections         = '10',
+  $logappend             = '0',
+#  $server_root           = undef,
+#  $server_root           = "/opt/teamspeak3-server_linux-${::architecture}",
+#  $ts3server_package     = 'UNSET',
+#  $ts3server_package     = undef,
+#  $ts3server_package_url = 'UNSET',
+#  $ts3server_package_url = undef,
+#  $ts3server_package     = "teamspeak3-server_linux-${architecture}-${version}.tar.gz",
+#  $ts3server_package_url = "http://files.teamspeak-services.com/releases/${version}/${ts3server_package}",
+$package_name = undef,
+$package_download_url = undef,
+$installroot		= "/opt/teamspeak"
+){
+/*  if $ts3server_package == undef {
+	  $ts3server_package     = "teamspeak3-server_linux-${architecture}-${version}.tar.gz"
+  }
+  if $ts3server_package_url == undef {
+	  $ts3server_package_url = "http://files.teamspeak-services.com/releases/${version}/${ts3server_package}"
+  }
+*/
   if defined(Class['ts3server::mysql']) {
     $dbplugin = 'ts3db_mysql'
   }

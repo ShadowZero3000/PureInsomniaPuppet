@@ -39,7 +39,7 @@ status)
 # Check whether there's a "Team Speak 3" process
 ps aux | grep -v grep | grep ts3server_ > /dev/null
 CHECK=$?
-[ $CHECK -eq 0 ] && echo "$DESC is UP" || echo "$DESC is DOWN"
+[ $CHECK -eq 0 ] && echo "$DESC is UP" && exit 0 || echo "$DESC is DOWN" && exit 1
 ;;
 *)
 echo "Usage: $0 {start|stop|status|restart}"
