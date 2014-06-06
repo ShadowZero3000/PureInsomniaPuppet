@@ -37,6 +37,7 @@ ufw::allow { "teamspeak-udp":
 
 class { 'apache':
 }
+apache::module { 'ssl':}
 apache::module { 'proxy':}
 apache::module { 'vhost_alias':}
 
@@ -46,11 +47,13 @@ file {'pureinsomnia.com':
   source	=> 'puppet:///modules/pureinsomnia/pureinsomnia.com.conf',
   owner		=> root,
   mode		=> 0644,
+  require	=> Class['apache'],
 }
 file {'pureinsomnia.com-link':
   path		=> '/etc/apache2/sites-enabled/00-pureinsomnia.com.conf',
   ensure	=> link,
   target	=> '../sites-available/pureinsomnia.com.conf',
+  require	=> Class['apache'],
 }
 
 class { 'ts3server':
@@ -124,8 +127,8 @@ ssh_authorized_key { 'Redemption':
 class defaults {
 	class { 'duplicity::params':
 		bucket	=> 'raven_backup',
-		dest_id	=> 'AKIAIIMKW67AJOB5BO5Q',
-		dest_key => 'NjpH89rHZ3LZG1+SYjM2l+rwnW+BS9SmuBa1KCyT',
+	dest_id => hiera("dest_id"),
+	dest_key => hiera("dest_key"),
 		remove_older_than => '2M',
 		pubkey_id => '63452547',
 		folder	=> 'raven.pureinsomnia.com',
@@ -149,3 +152,17 @@ duplicity { 'sql_backup':
 #	target => '/opt/static/teamspeak/licensekey.dat'
 #}
 
+apt::key { 'owncloud':
+  key        => 'BA684223',
+  key_source => 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_13.10/Release.key',
+}
+apt::source { 'owncloud_source':
+	location => "http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_13.10/",
+	repos => "/",
+	release => "",
+	before => Package['owncloud'],
+	require => Apt::Key['owncloud'],
+}
+package{'owncloud':
+	ensure=> 'installed',
+}
