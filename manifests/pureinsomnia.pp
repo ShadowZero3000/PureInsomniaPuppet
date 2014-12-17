@@ -166,3 +166,9 @@ apt::source { 'owncloud_source':
 package{'owncloud':
 	ensure=> 'installed',
 }
+ssh_authorized_key { 'Pearson':
+	ensure	=> present,
+	user	=> theinsomniac,
+	type	=> ssh-rsa,
+	key	=> "AAAAB3NzaC1yc2EAAAADAQABAAABAQDv2kEP9C2wqU/FAn0p1DsVvUqQ5tNb2Xz8UyAQzP1smq1R93bozfMY92Tna4a16xoGqi/zPfw09eHf4xAtGf6nIBRzRboXCLy9Mlaclg62Q0f28MWlFvaD5aov1K/Ywiel7etMWLryGzEnc43bexw298JVKPCb5LkmZq607TMC4gQHK4TsDBswTSFRIV0QspLRNW348dzUAo7rGQmbZ3vnp23J5LTWzeaDdYguc2kkbL2jZC57/Gsnpcv2k+m9vV1pcA+u31sL1eyER47NHONcZqXhjyfH7kSOEOxRSjKNERCDio0/bBpveF0XfW6q5ZAPlW7Fwci0mFQRiaQlK03p"
+}
